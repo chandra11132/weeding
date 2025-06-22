@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Pernikahan Digital</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #764ba2;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-menu a:hover {
+            color: #764ba2;
+        }
+
+        /* Page Sections */
+        .page {
+            display: none;
+            padding: 100px 0 50px;
+            min-height: 100vh;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Landing Page */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            margin: 2rem 0;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        /* Questionnaire */
+        .questionnaire-form {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #764ba2;
+        }
+
+        /* Templates */
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .template-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .template-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .template-preview {
+            height: 200px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .template-preview::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .template-info {
+            padding: 1.5rem;
+        }
+
+        .template-info h3 {
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .template-info p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .template-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #764ba2;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .templates-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #5a6fd8, #6a4190);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">💍</div>
+                WeddingInvite
+            </div>
+            <ul class="nav-menu">
+                <li><a onclick="showPage('landing')">Beranda</a></li>
+                <li><a onclick="showPage('questionnaire')">Mulai Buat</a></li>
+                <li><a onclick="showPage('templates')">Template</a></li>
+                <li><a onclick="showPage('about')">Tentang</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Landing Page -->
+    <div id="landing" class="page active">
+        <div class="container">
+            <div class="hero fade-in">
+                <h1>Undangan Pernikahan Digital</h1>
+                <p>Ciptakan undangan pernikahan yang indah dan berkesan untuk hari spesial Anda</p>
+                <button class="cta-button" onclick="showPage('questionnaire')">Mulai Membuat Undangan</button>
+            </div>
+
+            <div class="features fade-in">
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>10+ Template Cantik</h3>
+                    <p>Pilih dari berbagai template yang telah dirancang khusus untuk pernikahan Indonesia</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Responsive Design</h3>
+                    <p>Undangan yang sempurna di semua perangkat - mobile, tablet, dan desktop</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Mudah & Cepat</h3>
+                    <p>Buat undangan hanya dalam 5 menit dengan form yang sederhana</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Questionnaire -->
+    <div id="questionnaire" class="page">
+        <div class="container">
+            <div class="questionnaire-form fade-in">
+                <h2 style="text-align: center; margin-bottom: 2rem; color: #764ba2;">Buat Undangan Pernikahan Anda</h2>
+                
+                <div class="form-group">
+                    <label>Nama Mempelai Pria</label>
+                    <input type="text" placeholder="Masukkan nama lengkap mempelai pria">
+                </div>
+
+                <div class="form-group">
+                    <label>Nama Mempelai Wanita</label>
+                    <input type="text" placeholder="Masukkan nama lengkap mempelai wanita">
+                </div>
+
+                <div class="form-group">
+                    <label>Tanggal Pernikahan</label>
+                    <input type="date">
+                </div>
+
+                <div class="form-group">
+                    <label>Waktu Akad Nikah</label>
+                    <input type="time">
+                </div>
+
+                <div class="form-group">
+                    <label>Waktu Resepsi</label>
+                    <input type="time">
+                </div>
+
+                <div class="form-group">
+                    <label>Alamat Venue</label>
+                    <textarea rows="3" placeholder="Masukkan alamat lengkap venue pernikahan"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Nama Venue</label>
+                    <input type="text" placeholder="Nama gedung atau tempat resepsi">
+                </div>
+
+                <div class="form-group">
+                    <label>Pesan Khusus (Opsional)</label>
+                    <textarea rows="3" placeholder="Tambahkan pesan khusus untuk tamu"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Pilih Template</label>
+                    <select>
+                        <option>Pilih template yang diinginkan</option>
+                        <option>Template Elegant Gold</option>
+                        <option>Template Modern Minimalist</option>
+                        <option>Template Classic Romance</option>
+                        <option>Template Floral Garden</option>
+                        <option>Template Royal Blue</option>
+                    </select>
+                </div>
+
+                <button class="cta-button" style="width: 100%; margin-top: 1rem;" onclick="alert('Undangan berhasil dibuat! Anda akan diarahkan ke halaman template.')">
+                    Buat Undangan Sekarang
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Templates -->
+    <div id="templates" class="page">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 3rem; color: white; font-size: 2.5rem;">Pilih Template Favorit Anda</h2>
+            
+            <div class="templates-grid fade-in">
+                <div class="template-card" onclick="previewTemplate('Elegant Gold')">
+                    <div class="template-preview" style="background: linear-gradient(135deg, #d4af37, #ffd700);">
+                        <div style="text-align: center;">
+                            <h3>Elegant Gold</h3>
+                            <p>Kemewahan emas klasik</p>
+                        </div>
+                    </div>
+                    <div class="template-info">
+                        <h3>Elegant Gold</h3>
+                        <p>Template mewah dengan aksen emas untuk pernikahan yang elegan</p>
+                        <div class="template-price">Rp 150.000</div>
+                    </div>
+                </div>
+
+                <div class="template-card" onclick="previewTemplate('Modern Minimalist')">
+                    <div class="template-preview" style="background: linear-gradient(135deg, #2c3e50, #34495e);">
+                        <div style="text-align: center;">
+                            <h3>Modern Minimalist</h3>
+                            <p>Sederhana namun elegan</p>
+                        </div>
+                    </div>
+                    <div class="template-info">
+                        <h3>Modern Minimalist</h3>
+                        <p>Desain bersih dan modern untuk pasangan yang menyukai kesederhanaan</p>
+                        <div class="template-price">Rp 125.000</div>
+                    </div>
+                </div>
+
+                <div class="template-card" onclick="previewTemplate('Classic Romance')">
+                    <div class="template-preview" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">
+                        <div style="text-align: center;">
+                            <h3>Classic Romance</h3>
+                            <p>Romantis dan klasik</p>
+                        </div>
+                    </div>
+                    <div class="template-info">
+                        <h3>Classic Romance</h3>
+                        <p>Template romantis dengan nuansa merah yang hangat dan klasik</p>
+                        <div class="template-price">Rp 135.000</div>
+                    </div>
+                </div>
+
+                <div class="template-card" onclick="previewTemplate('Floral Garden')">
+                    <div class="template-preview" style="background: linear-gradient(135deg, #27ae60, #2ecc71);">
+                        <div style="text-align: center;">
+                            <h3>Floral Garden</h3>
+                            <p>Segar dan natural</p>
+                        </div>
+                    </div>
+                    <div class="template-info">
+                        <h3>Floral Garden</h3>
+                        <p>Template dengan tema taman bunga yang segar dan natural</p>
+                        <div class="template-price">Rp 140.000</div>
+                    </div>
+                </div>
+
+                <div class="template-card" onclick="previewTemplate('Royal Blue')">
+                    <div class="template-preview" style="background: linear-gradient(135deg, #3498db, #2980b9);">
+                        <div style="text-align: center;">
+                            <h3>Royal Blue</h3>
+                            <p>Mewah dan berkelas</p>
+                        </div>
+                    </div>
+                    <div class="template-info">
+                        <h3>Royal Blue</h3>
+                        <p>Template dengan warna biru royal yang mewah dan berkelas</p>
+                        <div class="template-price">Rp 160.000</div>
+                    </div>
+                </div>
+
+                <div class="template-card" onclick="previewTemplate('Sunset Orange')">
+                    <div class="template-preview" style="background: linear-gradient(135deg, #e67e22, #d35400);">
+                        <div style="text-align: center;">
+                            <h3>Sunset Orange</h3>
+                            <p>Hangat dan ceria</p>
+                        </div>
+                    </div>
+                    <div class="template-info">
+                        <h3>Sunset Orange</h3>
+                        <p>Template dengan gradasi sunset yang hangat dan ceria</p>
+                        <div class="template-price">Rp 130.000</div>
+                    </div>
+                </div>
+
+                <div class="template-card" onclick="previewTemplate('Purple Dream')">
+                    <div class="template-preview" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">
+                        <div style="text-align: center;">
+                            <h3>Purple Dream</h3>
+                            <p>Misterius dan anggun</p>
+                        </div>
+                    </div>
+                    <div class="template-info">
+                        <h3>Purple Dream</h3>
+                        <p>Template dengan nuansa ungu yang misterius dan anggun</p>
+                        <div class="template-price">Rp 145.000</div>
+                    </div>
+                </div>
+
+                <div class="template-card" onclick="previewTemplate('Silver Elegance')">
+                    <div class="template-preview" style="background: linear-gradient(135deg, #95a5a6, #7f8c8d);">
+                        <div style="text-align: center;">
+                            <h3>Silver Elegance</h3>
+                            <p>Elegan dan modern</p>
+                        </div>
+                    </div>
+                    <div class="template-info">
+                        <h3>Silver Elegance</h3>
+                        <p>Template dengan aksen silver yang elegan dan modern</p>
+                        <div class="template-price">Rp 155.000</div>
+                    </div>
+                </div>
+
+                <div class="template-card" onclick="previewTemplate('Pink Blossom')">
+                    <div class="template-preview" style="background: linear-gradient(135deg, #e91e63, #ad1457);">
+                        <div style="text-align: center;">
+                            <h3>Pink Blossom</h3>
+                            <p>Feminin dan manis</p>
+                        </div>
+                    </div>
+                    <div class="template-info">
+                        <h3>Pink Blossom</h3>
+                        <p>Template dengan nuansa pink yang feminin dan manis</p>
+                        <div class="template-price">Rp 125.000</div>
+                    </div>
+                </div>
+
+                <div class="template-card" onclick="previewTemplate('Rustic Wood')">
+                    <div class="template-preview" style="background: linear-gradient(135deg, #8d6e63, #5d4037);">
+                        <div style="text-align: center;">
+                            <h3>Rustic Wood</h3>
+                            <p>Natural dan hangat</p>
+                        </div>
+                    </div>
+                    <div class="template-info">
+                        <h3>Rustic Wood</h3>
+                        <p>Template dengan tema kayu yang natural dan hangat</p>
+                        <div class="template-price">Rp 140.000</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About -->
+    <div id="about" class="page">
+        <div class="container">
+            <div style="background: rgba(255, 255, 255, 0.95); padding: 3rem; border-radius: 20px; margin: 2rem 0;">
+                <h2 style="text-align: center; margin-bottom: 2rem; color: #764ba2;">Tentang WeddingInvite</h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 2rem 0;">
+                    <div>
+                        <h3 style="color: #333; margin-bottom: 1rem;">Visi Kami</h3>
+                        <p>Membantu setiap pasangan menciptakan undangan pernikahan digital yang indah, personal, dan berkesan untuk hari spesial mereka.</p>
+                    </div>
+                    
+                    <div>
+                        <h3 style="color: #333; margin-bottom: 1rem;">Misi Kami</h3>
+                        <p>Menyediakan platform yang mudah, cepat, dan terjangkau untuk membuat undangan pernikahan digital dengan kualitas premium.</p>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin: 3rem 0;">
+                    <h3 style="color: #333; margin-bottom: 1rem;">Mengapa Memilih Kami?</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎨</div>
+                            <strong>Design Premium</strong>
+                            <p>Template dirancang oleh designer profesional</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚡</div>
+                            <strong>Proses Cepat</strong>
+                            <p>Undangan siap dalam hitungan menit</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">💰</div>
+                            <strong>Harga Terjangkau</strong>
+                            <p>Mulai dari Rp 125.000 saja</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">📱</div>
+                            <strong>Responsive</strong>
+                            <p>Sempurna di semua perangkat</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center;">
+                    <button class="cta-button" onclick="showPage('questionnaire')">
+                        Mulai Membuat Undangan
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Add fade-in animation
+            const activePage = document.getElementById(pageId);
+            activePage.style.opacity = '0';
+            setTimeout(() => {
+                activePage.style.opacity = '1';
+                activePage.style.transition = 'opacity 0.5s ease-in-out';
+            }, 50);
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        function previewTemplate(templateName) {
+            alert(`Anda memilih template: ${templateName}\n\nFitur template ini akan menampilkan:\n• Preview lengkap template\n• Customization options\n• Live preview dengan data Anda\n• Download & sharing options`);
+        }
+
+        // Smooth scrolling for navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add smooth animations to cards
+            const cards = document.querySelectorAll('.template-card, .feature-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.classList.add('fade-in');
+            });
+        });
+
+        // Add hover effects to buttons
+        const buttons = document.querySelectorAll('.cta-button');
+        buttons.forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px) scale(1.05)';
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
